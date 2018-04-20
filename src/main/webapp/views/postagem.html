@@ -1,0 +1,23 @@
+
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+
+        <link rel="stylesheet" th:href="@{/css/postagemCSS.css}">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title th:text="#{postagem.titulo}"> </title>
+
+    </head>
+    <body>
+
+        <article id="postagem">
+            <a id="linkHome" th:href="@{/home}"> <p th:text="#{home.home}"> </p> </a> <hr>
+            <img id="fotoPerfil" th:src= "@{${session.postagemUnica.usuario.imagem}}" height="100" width="100">
+            <h3 th:text="${session.postagemUnica.usuario.nome}"> </h3>
+            <p th:text="${session.postagemUnica.menssagem}"> </p>
+            <a id="linkFavoritar" th:href="@{/favoritar/{id}(id=${session.postagemUnica.id})}" ><p th:text="#{home.favoritar}" style=" text-decoration: none; text-align: center;"></p></a>
+            <a id="linkExcluir" th:href="@{/excluirPost/{id}(id=${session.postagemUnica.id})}" th:if="${session.postagemUnica.usuario.nome} == ${session.usuarioLogado.nome}"><p th:text="#{home.deletarPost}" style=" text-decoration: none; margin: 2%;"></p></a>
+        </article>
+
+    </body>
+</html>

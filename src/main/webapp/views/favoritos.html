@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <link rel="stylesheet" th:href="@{/css/homeCSS.css}">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title th:text="#{favoritos.titulo}"></title>
+    </head>
+
+    <body>
+        <div id="container">
+
+
+            <div id="perfil">
+                <img id="imgPerfil" th:src="@{${session.usuarioLogado.imagem}}"/>
+                <h3 id="nomePerfil" th:text = "${session.usuarioLogado.nome}"> </h3>
+                <hr>
+                <a id="linkHome" th:href="@{/home}"> <p th:text="#{home.home}"> </p> </a> <hr>
+                <a id="logout" th:href="@{/logout}"> <p th:text="#{home.logout}"> </p> </a> <hr>
+
+            </div>
+
+            <div id="conteudo">
+
+                <div id="novoPost">
+                    
+                    <form method="post" th:action="@{/buscar}" id="usrform">
+                        <input type="text" name="nome"> 
+                        <input type="submit" th:value="#{home.botaoBuscar}"/> <br><br>
+                    </form>
+                    
+                </div>
+
+                <div id="postagems">
+                    
+                    <h3 style="margin: 2%;" th:text="#{favoritos.subTitulo}"> </h3>
+
+                    <div id="post_panel" th:each="post: ${session.postagensFavoritas}">
+                        <article id="postagem">
+                            <h3 style="margin: 2%;" th:text= "${post.usuario.nome}"> </h3>
+                            <hr>
+                            <p style="margin: 2%;" th:text="${post.menssagem}"> </p>
+                            <a th:href="@{/post/{id}(id=${post.id})}"><p th:text="#{home.linkPost}" style=" text-decoration: none; text-align: right; margin: 2%;"></p></a>
+                        </article>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

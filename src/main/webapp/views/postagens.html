@@ -1,0 +1,41 @@
+
+
+<!DOCTYPE HTML>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <link rel="stylesheet" th:href="@{/css/homeCSS.css}">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title th:text="#{postagens.titulo}"></title>
+    </head>
+
+    <body>
+        <div id="container">
+            <div id="perfil">
+                <img id="imgPerfil" th:src="@{${session.usuarioBuscado.imagem}}"/>
+                <h3 id="nomePerfil" th:text = "${session.usuarioBuscado.nome}"> </h3>
+                <hr>
+                <a id="linkHome" th:href="@{/home}"> <p th:text="#{home.home}"> </p> </a> <hr>
+                <a class="seguir" th:href="@{/addAmigo/{id}(id=${session.usuarioBuscado.id})}" th:if="${session.isAmigo} == '0'" ><p class="seguir" th:text="#{postagens.seguir}"> </p></a>
+                <a class="seguir" th:href="@{/excluirAmigo/{id}(id=${session.usuarioBuscado.id})}" th:if="${session.isAmigo} == '1'"><p class="seguir" th:text="#{postagens.deixarSeguir}"> </p></a>
+
+            </div>
+            <div id="conteudo">
+                <div id="postagems">
+                    <h3 style="margin: 2%;" id="descricaoPerfil" th:text = "${session.usuarioBuscado.descricao}"> </h3>
+                    <div id="post_panel" th:each="post: ${session.postagensUsuarioBuscado}">
+                        <article id="postagem">
+                            <h3 style="margin: 2%;" th:text= "${post.usuario.nome}"> </h3>
+                            <a th:href="@{/excluirPost/{id}(id=${post.id})}" th:if="${post.usuario.nome} == ${session.usuarioLogado.nome}"><p th:text="#{home.deletarPost}" style=" text-decoration: none; text-align: right; margin: 2%;"></p></a>
+                            <hr>
+                            <p style="margin: 2%;" th:text="${post.menssagem}"> </p>
+                            <a th:href="@{/post/{id}(id=${post.id})}"><p th:text="#{postagens.linkPost}" style=" text-decoration: none; text-align: right; margin: 2%;"> </p></a>
+                        </article>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

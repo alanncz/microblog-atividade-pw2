@@ -1,0 +1,76 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <link rel="stylesheet" th:href="@{/css/homeCSS.css}">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script th:src="@{/js/awesomplete.js}"></script>
+        <title th:text="#{home.titulo}"></title>
+    </head>
+
+    <body>
+        <div id="container">
+
+
+            <div id="perfil">
+                <img id="imgPerfil" th:src="@{${session.usuarioLogado.imagem}}"/>
+                <h3 id="nomePerfil" th:text = "${session.usuarioLogado.nome}"> </h3>
+                <hr>
+                <a id="linkHome" th:href="@{/home}"> <p th:text="#{home.home}"> </p> </a> <hr>
+                <a id="logout" th:href="@{/logout}"> <p th:text="#{home.logout}"> </p> </a> <hr>
+                <a id="favoritos" th:href="@{/favoritos}"> <p th:text="#{home.favoritos}"> </p> </a> <hr>
+                <form id="csv" method="GET" th:action="@{/export}"> 
+                    <button type="submit" class="btn btn-link" style="text-decoration: none; padding-left: 0">Export posts</button> <hr>
+                    <input type="hidden" name="id" th:value="${session.usuarioLogado.id}">
+                </form>
+
+            </div>
+
+            <div id="conteudo">
+
+                <div id="novoPost">
+
+                    <form method="post" th:action="@{/buscar}">
+                        <input type="search" name="nome" id="autonames" style="float: left; margin-left: 2%" > 
+                        <input type="submit" th:value="#{home.botaoBuscar}"/> <br><br>
+                    </form>
+
+                    <form method="post" th:action="@{/postar}" id="usrform" enctype="multipart/form-data">
+                        <textarea id="textarea" name="menssagem" style="height: 100px; width: 30%;" required/> </textarea> <br><br>
+                        <input type="submit" th:value="#{home.botaoPostar}"/> <br><br>
+                    </form>
+                </div>
+
+                <div id="postagems">
+
+                    <div id="post_panel" th:each="post: ${session.postagens}">
+                        <article id="postagem">
+                            <h3 style="margin: 2%;" th:text= "${post.usuario.nome}"> </h3>
+                            <a th:href="@{/excluirPost/{id}(id=${post.id})}" th:if="${post.usuario.nome} == ${session.usuarioLogado.nome}"><p th:text="#{home.deletarPost}" style=" text-decoration: none; text-align: right; margin: 2%;"></p></a>
+                            <hr>
+                            <p style="margin: 2%;" th:text="${post.menssagem}"> </p>
+                            <a th:href="@{/post/{id}(id=${post.id})}"><p th:text="#{home.linkPost}" style=" text-decoration: none; text-align: right; margin: 2%;"></p></a>
+                        </article>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", "http://localhost:8080/atividade-pw2/usernames", false); // false for synchronous request
+            xmlHttp.send(null);
+            var usernames = xmlHttp.responseText.split(";");
+            console.log(usernames);
+            var input = document.getElementById("autonames");
+            new Awesomplete(input, {
+                list: usernames
+            });
+            
+        </script>
+
+    </body>
+</html>

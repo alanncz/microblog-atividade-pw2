@@ -1,0 +1,35 @@
+
+
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+        <link rel="stylesheet" th:href="@{/css/indexCSS.css}">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Pagina Inicial</title>
+    </head>
+    
+    <body>
+        
+    <center> <h1 th:text="#{index.titulo}"> </h1></center>
+        <form class="formulario" method="post" action="cadastrar" enctype="multipart/form-data">
+            <label th:text="#{index.labelNome}"> </label> <br>
+            <input type="text" name="nome" required/><br><br>
+            <label th:text="#{index.labelSenha}">> </label> <br>
+            <input type="password" name="senha" required/><br><br>
+            <input type="file" name="foto" accept="image/*" required><br><br>
+            <label th:text="#{index.labeldescricao}"> </label> <br>
+            <textarea id="textarea" name="descricao" style="height: 50px; width: 50%;" required/> </textarea> <br><br>
+            <input type="submit" th:value="#{index.inputCadastrar}"/><br><br>
+        </form>
+        
+
+        <form class="formulario" method="POST" action="login">
+            <label th:text="#{index.labelLogin}"> </label> <br>
+            <input type="text" name="nome" required/><br><br>
+            <label th:text="#{index.labelLoginSenha}"> </label> <br><br>
+            <input type="password" name="senha" required/><br><br>
+            <input type="submit" th:value="#{index.inputLogin}"/>
+        </form>
+    </body>
+</html>
